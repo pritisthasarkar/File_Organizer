@@ -63,8 +63,10 @@ function getFolderName(extension){
         return "documents";
     }else if(types.app.indexOf(extension)!=-1){
         return "app"
-    }else{
+    }else if(types.images.indexOf(extension)!=-1){
         return "images";
+    }else{
+        return "miscellenous";
     }
 }
 function copyFileToDest(srcPath,fullPathOfFile,folderName){
@@ -82,4 +84,7 @@ function copyFileToDest(srcPath,fullPathOfFile,folderName){
 }
 
 let srcPath = "C:\\Users\\HP\\Desktop\\fjp dev\\js\\file_organizer\\downloads"
-organize(srcPath);
+// organize(srcPath);
+module.exports={
+    organize:organize
+}
