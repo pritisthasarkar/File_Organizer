@@ -37,12 +37,13 @@ function organize(srcPath) {
         //1. to check if it is a file or folder. we will proceed forward only if it is a file.
 
         let fullPathOfFile = path.join(srcPath, allFiles[i]);
-        let isFile = fs.lstatSync(fullPathOfFile).isFile(); //fs.lstatSync() gives information about the link provided(the link can be anything). lstatSync() has a function isFile()/isDirectory() which tells us if the link provided corresponds to a file or a directory. true --> agar file hain false --> agar folder hain.
+        let isFile = fs.lstatSync(fullPathOfFile).isFile(); //fs.lstatSync() gives information about the link provided which refers to a file or a directory. lstatSync() has a function isFile()/isDirectory() which tells us if the link provided corresponds to a file or a directory. true --> agar file hain false --> agar folder hain.
         if (isFile) {
             //2. to get the extension of the file
             let extension=allFiles[i].split(".")[1];
             //3. to get the designated folder name where the file belongs
             let folderName=getFolderName(extension); //archives
+            // console.log(allFiles[i] +" belongs in "+folderName);
             //4. copy the file from the source folder(srcPath) to the destination folder(folder_name eg:- images,songs etc.).
             //          copy from    copy what    paste where
             copyFileToDest(srcPath,fullPathOfFile,folderName);
@@ -54,12 +55,30 @@ function organize(srcPath) {
 function getFolderName(extension){
 
     //code
-    return folderName;
+    if(types.media.indexOf(extension)!=-1){
+        return "media";
+    }else if(types.archives.indexOf(extension)!=-1){
+        return "archives";
+    }else if(types.documents.indexOf(extension)!=-1){
+        return "documents";
+    }else if(types.app.indexOf(extension)!=-1){
+        return "app"
+    }else{
+        return "images";
+    }
 }
-
 function copyFileToDest(srcPath,fullPathOfFile,folderName){
-    
+
     //code
+    let destFolderPath=path.join(srcPath,"organized_files",folderName);//...../organized_files/images
+    //check if folder already exists. if does not then make folder.
+    if(!fs.existsSync(destFolderPath)){
+        fs.mkdirSync(destFolderPath);
+    }
+    let fileName=path.basename(fullPathOfFile);
+    let destFileName=path.join(destFolderPath,fileName);
+    //              source path     destination path
+    fs.copyFileSync(fullPathOfFile,destFileName);
 }
 
 let srcPath = "C:\\Users\\HP\\Desktop\\fjp dev\\js\\file_organizer\\downloads"
