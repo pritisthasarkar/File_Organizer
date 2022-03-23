@@ -36,5 +36,5 @@ module.exports = {
   tree: treeFn,
 };
 
-// let srcPath="/Users/abhishekgoel/Desktop/Desktop/AbhishekGoel/FJP5/Node/"
+let srcPath="C:\\Users\\HP\\Desktop\\fjp_dev\\js\\file_organizer"
 // treeFn(srcPath);
