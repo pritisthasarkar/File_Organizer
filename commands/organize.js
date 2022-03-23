@@ -2,10 +2,10 @@ const fs = require("fs");
 const path = require("path");
 
 let types = {
-    media: ["mp4", "mkv", "mp3"],
+    media: ["mp4", "mkv", "mp3","mov"],
     archives: ['zip', '7z', 'rar', 'tar', 'gz', 'ar', 'iso', "xz"],
-    documents: ['docx', 'doc', 'pdf', 'xlsx', 'xls', 'odt', 'ods', 'odp', 'odg', 'odf', 'txt', 'ps', 'tex'],
-    app: ['exe', 'dmg', 'pkg', "deb"],
+    documents: ['docx', 'doc', 'pdf', 'xlsx', 'xls', 'odt', 'ods', 'odp', 'odg', 'odf', 'txt', 'ps', 'tex','csv','json'],
+    app: ['exe', 'dmg', 'pkg', "deb","apk"],
     images: ['png', 'jpg', 'jpeg']
 }
 
@@ -40,7 +40,7 @@ function organize(srcPath) {
         let isFile = fs.lstatSync(fullPathOfFile).isFile(); //fs.lstatSync() gives information about the link provided which refers to a file or a directory. lstatSync() has a function isFile()/isDirectory() which tells us if the link provided corresponds to a file or a directory. true --> agar file hain false --> agar folder hain.
         if (isFile) {
             //2. to get the extension of the file
-            let extension=allFiles[i].split(".")[1];
+            let extension=allFiles[i].split(".")[1].toLowerCase();
             //3. to get the designated folder name where the file belongs
             let folderName=getFolderName(extension); //archives
             // console.log(allFiles[i] +" belongs in "+folderName);
@@ -83,7 +83,7 @@ function copyFileToDest(srcPath,fullPathOfFile,folderName){
     fs.copyFileSync(fullPathOfFile,destFileName);
 }
 
-let srcPath = "C:\\Users\\HP\\Desktop\\fjp dev\\js\\file_organizer\\downloads"
+let srcPath="C:\\Users\\HP\\Desktop\\fjp_dev\\js\\file_organizer\\downloads"
 // organize(srcPath);
 module.exports={
     organize:organize
